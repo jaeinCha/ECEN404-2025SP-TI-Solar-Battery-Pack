@@ -1,0 +1,80 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0G350X" --part "Default" --package "LQFP-64(PM)" --product "mspm0_sdk@2.04.00.06"
+ * @v2CliArgs --device "MSPM0G3507" --package "LQFP-64(PM)" --product "mspm0_sdk@2.04.00.06"
+ * @versions {"tool":"1.22.0+3893"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1  = GPIO.addInstance();
+const GPIO2  = GPIO.addInstance();
+const I2C    = scripting.addModule("/ti/driverlib/I2C", {}, false);
+const I2C1   = I2C.addInstance();
+const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+GPIO1.$name                         = "GPIO_PORTA";
+GPIO1.port                          = "PORTA";
+GPIO1.associatedPins.create(6);
+GPIO1.associatedPins[0].$name       = "PA0_INPUT";
+GPIO1.associatedPins[0].assignedPin = "0";
+GPIO1.associatedPins[0].direction   = "INPUT";
+GPIO1.associatedPins[1].$name       = "PA7_OUTPUT";
+GPIO1.associatedPins[1].assignedPin = "7";
+GPIO1.associatedPins[2].$name       = "PA8_OUTPUT";
+GPIO1.associatedPins[2].assignedPin = "8";
+GPIO1.associatedPins[3].$name       = "PA9_OUTPUT";
+GPIO1.associatedPins[3].assignedPin = "9";
+GPIO1.associatedPins[4].$name       = "PA10_OUTPUT";
+GPIO1.associatedPins[4].assignedPin = "10";
+GPIO1.associatedPins[5].$name       = "PA11_OUTPUT";
+GPIO1.associatedPins[5].assignedPin = "11";
+
+const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
+
+GPIO2.$name                         = "GPIO_PORTB";
+GPIO2.port                          = "PORTB";
+GPIO2.associatedPins.create(3);
+GPIO2.associatedPins[0].$name       = "PB13_INPUT";
+GPIO2.associatedPins[0].assignedPin = "13";
+GPIO2.associatedPins[0].direction   = "INPUT";
+GPIO2.associatedPins[1].$name       = "PB14_OUTPUT";
+GPIO2.associatedPins[1].assignedPin = "14";
+GPIO2.associatedPins[2].$name       = "PB15_INPUT";
+GPIO2.associatedPins[2].assignedPin = "15";
+GPIO2.associatedPins[2].direction   = "INPUT";
+
+I2C1.$name                     = "I2C_0";
+I2C1.basicEnableController     = true;
+I2C1.peripheral.sdaPin.$assign = "PB3";
+I2C1.peripheral.sclPin.$assign = "PB2";
+I2C1.sdaPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric0";
+I2C1.sclPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric1";
+
+SYSCTL.forceDefaultClkConfig = true;
+SYSCTL.clockTreeEn           = true;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+GPIO1.associatedPins[0].pin.$suggestSolution = "PA0";
+GPIO1.associatedPins[1].pin.$suggestSolution = "PA7";
+GPIO1.associatedPins[2].pin.$suggestSolution = "PA8";
+GPIO1.associatedPins[3].pin.$suggestSolution = "PA9";
+GPIO1.associatedPins[4].pin.$suggestSolution = "PA10";
+GPIO1.associatedPins[5].pin.$suggestSolution = "PA11";
+Board.peripheral.$suggestSolution            = "DEBUGSS";
+Board.peripheral.swclkPin.$suggestSolution   = "PA20";
+Board.peripheral.swdioPin.$suggestSolution   = "PA19";
+GPIO2.associatedPins[0].pin.$suggestSolution = "PB13";
+GPIO2.associatedPins[1].pin.$suggestSolution = "PB14";
+GPIO2.associatedPins[2].pin.$suggestSolution = "PB15";
+I2C1.peripheral.$suggestSolution             = "I2C1";
